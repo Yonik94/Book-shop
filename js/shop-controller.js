@@ -2,12 +2,11 @@
 var gShopOwner = {
     userName: 'Yoni',
     password: '123',
-    isLogin: true
+    isLogin: false
 }
 //TODO new font from google fonts
 //To fix the bugs of price in translation (in adding or updating books)
 // Add resoponsive
-// change the color and padding of buttons by actions
 function onInit() {
     init()
     _renderBooks()
@@ -53,12 +52,12 @@ function onRemoveBook(id) {
 function onAddBook() {
     var elSideBar = document.querySelector('.sidebar')
     showElement(elSideBar)
-    renderSideBar('', 'addBook')
+    renderSideBar('', 'addingBook')
 }
 function onUpdateBook(id) {
     console.log(id)
     var book = findBookById(id)
-    renderSideBar(book, 'update')
+    renderSideBar(book, 'updatingBook')
     var elSideBar = document.querySelector('.sidebar')
     showElement(elSideBar)
 }
@@ -84,7 +83,7 @@ function renderSideBar(item, type) {
         var strhtml = createContactForm()
         elSideBarBody.innerHTML = strhtml
     } else {
-        if (type === 'addBook') {
+        if (type === 'addingBook') {
             elSideBarTitle.setAttribute('data-trans', 'add-book')
             var text = gTrans['add-book'][gCurrLang]
             elSideBarTitle.innerText = text
@@ -97,7 +96,7 @@ function renderSideBar(item, type) {
         var elSideBarBId = document.querySelector('.sidebar-content .book-id')
         elSideBarBName.innerText = ''
         elSideBarBId.innerText = ''
-        if (type !== 'addBook' && type !== 'login') {
+        if (type !== 'addingBook' && type !== 'login') {
             elSideBarBName.innerText = `Name: ${item.name}`
             elSideBarBId.innerText = `Id: ${item.id}`
         }
@@ -112,10 +111,10 @@ function renderSideBar(item, type) {
             <button class="margin" onclick="onCompleteLogin()">Login</button>`
         } else {
             var strhtml = `<input class="margin" name="name" type="text" 
-            placeholder="${(type === 'update') ? 'New name' : 'Book name'}">
+            placeholder="${(type === 'updatingBook') ? 'New name' : 'Book name'}">
             <input class="margin" name="price"  type="number"
-            placeholder="${(type === 'update') ? "New price" : "Book price"}">          
-            <button class="margin" onclick="onConfirmClick(${item.id}, ${type})">Confirm changes</button>`
+            placeholder="${(type === 'updatingBook') ? "New price" : "Book price"}">          
+            <button class="margin" onclick="onConfirmClick(${item.id}, '${type}')">Confirm changes</button>`
         }
         elSideBarBody.innerHTML = strhtml
     }
@@ -175,8 +174,7 @@ function onChangeLang() {
 function onConfirmClick(id, type) {
     var price = document.querySelector('input[name="price"]')
     var name = document.querySelector('input[name="name"]')
-    if (type === 'update') {
-        console.log('asda')
+    if (type === 'updatingBook') {
         if (!name.value && !price.value) return
         if (name.value) {
             updateBook(id, 'name', name.value)

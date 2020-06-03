@@ -4,8 +4,7 @@ const PAGE_SIZE = 8;
 var gPageIdx;
 var gBooks;
 function init(){
-    gId = 1;
-    gBooks = _createBooks()
+    gBooks = _createBooks();
     gPageIdx = 0;
 }
 
@@ -40,6 +39,7 @@ function _createBook(bookName, bookPrice) {
 function _createBooks() {
     var books = getBooksFromStorage('books')
     if (!books || books.length === 0) {
+        gId = 1
         var names = ['Harry Potter', 'The Black Sheep', 'Sybil']
         books = []
         for (var i = 0; i < 20; i++) {
@@ -48,8 +48,9 @@ function _createBooks() {
             var book = _createBook(name, price)
             books.push(book)
         }
-        saveBooks(books)
     }
+    gId = (books[books.length-1].id +1)
+    saveBooks(books)
     return books
 }
 function getBooksFromStorage(key) {
@@ -74,8 +75,8 @@ function addBook(name, price) {
     saveBooks(gBooks)
 }
 function updateBook(id, key, value) {
-    var bookId = findBookIdxById(id)
-    gBooks[bookId][key] = value
+    var book = findBookById(id)
+    book[key] = value
     saveBooks(gBooks)
 }
 function findBookById(id) {

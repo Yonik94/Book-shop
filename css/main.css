@@ -106,21 +106,8 @@ button{
     justify-content: space-around;
     align-items: center;
 }
-@keyframes show-animation{
-    0%{
-        opacity: 0;
-    }
-    100%{
-        opacity: 1;
-    }
-}
-@keyframes hide-animation{
-    0%{
-        opacity: 1;
-    }
-    100%{
-        opacity: 0;
-    }
+.sidebar img{
+    min-height: 200px;
 }
 .hide{
     display: none;
@@ -141,4 +128,20 @@ button{
 .details{
     background-color: blue;
     color: white;
+}
+@keyframes show-animation{
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes hide-animation{
+    0%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0;
+    }
 }
